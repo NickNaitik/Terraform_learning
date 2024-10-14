@@ -1,0 +1,221 @@
+Youtube video link - https://www.youtube.com/watch?v=4JYtAf4M88Y&t=134s
+
+Date - 12/10/2024
+
+What is terraform?  --> It is a IAC(Infrastructure as code).
+--------------------------------------------------------------
+What is IAC?  --> Tools allow you to manage Infrastructure with configurations files rather than through a GUI.
+
+Benifit of IAC rather than changing in GUI is that it allows you to build, change and manage your Infrastructure in a safe
+, consistent, and repeatable way by defining resource configurationsthat you can version reuse, and share.
+--------------------------------------------------------------
+SETUP STEPS
+
+Download terraform from official site, unzip it and set in the local environment variable 
+
+Path - C:\Users\Nick Naitik\Applications\Terraform_unzipped
+
+Open cmd and check if installed and variable env setting done.. (C:\Users\Nick Naitik>terraform version)
+
+SetUp AWS Account -  Created account using below information 
+    Email - naitikyadav24042000@gmail.com
+    Root Password - qazxcvbnmlpoiuytrew1234567890!@#$%^&*()
+    Full Name - Nick Naitik
+    Mobile No - +918757394648
+    Address line 1 - New Colony, Argada
+    Address line 2 - Near Check Post
+    City - Ramgarh
+    Postal Code - 829101
+
+    Payment using SBI DEBIT CARD - 4591 5601 3112 8688 
+
+Console url - https://eu-north-1.console.aws.amazon.com/console/home?nc2=h_ct&region=eu-north-1&src=header-signin#
+
+Console Sign-in URl - https://476114148640.signin.aws.amazon.com/console
+
+AWS account ID - 476114148640
+Canonical user Id - e55c079f0c819ddc34cfb2adc5610b9aef809359d0ff9da3a50a04b132241865
+
+Add MFA for root user.
+
+   Device Name for MFA - MY_ACER_LAPTOP
+   MFA Type - Passkey or security key
+
+Its not preferable to use root user for performing any actions from any applcations or code. So we need to setup users and roles using IAM.
+
+
+Now, We need to setup IAM user.
+    
+     Search IAM in console
+     Click Users under Access Management
+     Click on create user 
+     username - nick-user-1
+     select radio box - I want to create an IAM user 
+     select radio box - Custom Password - Nick_User_@_1
+     Unselect must create a new password at next sign-in
+
+Now create IAM group.
+     
+     user group name - admin
+     policy name - Administrator Access.
+
+Now nick-user-1 to admin group.
+
+Console Sign-in URl - https://476114148640.signin.aws.amazon.com/console
+
+Now Sign out from root user to login back using new admin user - nick-user-1  
+
+Once login using admin user, you can setup MFA for this as well.
+
+Add MFA for admin user.
+
+   Device Name for MFA - MY_ACER_LAPTOP
+   MFA Type - Passkey or security key
+
+Download AWS CLI --> https://aws.amazon.com/cli/ and install
+
+Open cmd and run --> "aws help" command to check.
+
+To connect your VS Code with aws account we need access key of the admin user (nick-user-1)
+
+In AWS click on IAM --> Users --> nick-user-1 --> create accses token --> CLI --> Description tag (terraform-aws) 
+
+Access Key --> AKIAW5WU5LUQFA45ZZW3
+Secret Access Key --> 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
+
+
+Run below two command in VS terminal:
+
+"aws configure" and provide the access key & secret access key only.
+
+once done check using cmd --> "aws iam list-users"
+
+-----------------------------------------------------------
+
+Terrform setup & code in VS
+
+Install terraform extension in VS Code.
+
+Referency document to start with terrafore providers - https://registry.terraform.io
+
+Copy the tf config code from here  - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/bedrock_provisioned_model_throughput
+
+Commands Run -
+
+1. GO inside folder where your terraform file is present - C:\Users\Nick Naitik\Terraform_learning> cd aws-ec2
+2. Initialize the terraform - C:\Users\Nick Naitik\Terraform_learning\aws-ec2> terraform init
+
+ After initialization you can see files like - ".terraform" & .terraform.lock.hcl
+
+3. Plan - C:\Users\Nick Naitik\Terraform_learning\aws-ec2> terraform plan
+4. Apply - C:\Users\Nick Naitik\Terraform_learning\aws-ec2> terraform apply
+
+Done - Instance available in console by name "Sample-Server-iac"
+
+Destroy all instances
+
+5. Destroy all Instances - C:\Users\Nick Naitik\Terraform_learning\aws-ec2> terraform destroy 
+
+Noticed that only instance will delete which will be created using terraform, instance created through GUI will not be deleted.
+
+6. To validate our terraform file - C:\Users\Nick Naitik\Terraform_learning\aws-ec2> terraform validate
+
+------------------Learnings -------------------------
+
+Terraform config 
+   1. It uses .tf extension
+   2. Format is HCL(hashicorp config Language)
+   3. Declarative Language
+   4. State Management
+
+State Management
+
+   The state file (terraform.tfstate) maintains a detailed record of the current state of managed resources.
+
+   This state file can be stored locally or remotely, with remote storage optionsnenabling collaboration by sharing 
+   the state accross teams and environments.
+
+Terraform also support JSON. 
+
+You can use variables like we use application.properties in java
+
+variable "region" {
+    description = "Value of region"
+    type = string
+    default = "ap-south-1"
+}
+
+and use it as - var.region wherever its required.
+
+Output block - output.tf
+
+AWS S3 = Aws S3(Amazon Simple Storage Service) is a scalable, high-speed, web-based cloud storage service designed for online bacckup and archiving of data and application.
+
+S3 bucket name should be globally unique.
+
+created a new aws-s3 folder under project folder.
+
+Note - Whenever we ceate a new folder we need to run terraform init command after creating main.tf file.
+
+
+Run command again from cmd - C:\Users\Nick Naitik\Terraform_learning\aws-s3> terraform init
+
+Check code and comments now
+---------------------------Hosting in s3 ----------------------------
+
+We are going to host a website in S3 bucket and give the access to everyone.
+
+Folder Name - demo-project
+
+Steps: 
+1. Provider configuration - Specifies AWS and random providers.
+2. Bucket creation - Creat a s3 bucket with unique name.
+3. Public Access - Configures public access to the bucket.
+4. Website Configurations - Sets up the bucket for static website hosting.
+5. File Uploads - Uploads the index.html and style.css files to bucket.
+6. Website Endpoint - Outputs the URl of the static website.
+
+----------------------------VPC -------------------------------------
+
+What is VPC?
+
+--> A private, isolated network within the AWS cloud where you can launch and manage your resources securily.
+
+Explanation of 10.0.1.0/24
+
+  --> An IPv4 address is 32 bits long.
+  --> Example in binary: '10.0.1.0 -> 00001010.00000000.00000001.00000000
+  --> The /24 indicates that the first 24 bits are the network portion of the address.
+  --> The remaining 8 bits are available for host addresses within the network.
+  --> Full Range is 10.0.1.0 to 10.0.1.255 or 00001010.00000000.00000001.00000000 to 00001010.00000000.00000001.11111111
+
+What is Route Table?
+
+--> A route tale is a set of rules, called routes, that are used to determine where network traffic from your subnets or gateway 
+   is directed. Each subnet in your VPC must be associated with a route table, which controls the routing for that subnet.
+
+Internet Gateway?
+
+--> An Internet Gateway is a component that allows communication between instances in your VPC and the internet.
+
+Security Groups?
+
+--> Network firewall rules that control inbound and outbound traffic for instances.
+
+What we have done for VPC using Terraform-
+
+   1. A VPC with a CIDR block of 10.0.0.0/16
+   2. One public subnet with a CIDR block of 10.0.1.0/24 (256 IP - Actually only 251)
+   3. One private subnet with a CIDR block of 10.0.2.0/28 (16 IP)
+   4. One internet Gateway
+   5. One public route table with a route to the internet Gateway and the correct association between the public subnet
+      and the public route table.
+   6. A EC2 instance using public subnet we created.
+   7. Setup NGINX webserver.
+   7. Create security group rule to enable HTTP access.
+   8. Output the webserver URL on terminal.
+
+Note: 
+   1. To access the termianl using EC2 console terminal, you need to setup ingress port 22 as well.
+   2. We need to see as sometimes commands will not work as per your OS, becuase I had ubuntu, so yum command did not work where as apt command work to install nginx server.
+   

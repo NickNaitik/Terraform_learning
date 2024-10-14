@@ -9,10 +9,10 @@ resource "aws_instance" "nginx-server" {
     
     // This will install nginx server
     user_data = <<-EOF
-              #!/bin/bash
-              sudo yum install nginx -y
-              sudo systemctl start nginx
-              EOF
+    #!/bin/bash
+    sudo apt install nginx -y
+    sudo systemctl start nginx
+    EOF
     tags = {
         Name = "Nginx_Server_1"
     }
