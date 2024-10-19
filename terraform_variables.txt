@@ -1,0 +1,37 @@
+project - tf-variables
+
+--> If you don't provide variable value it will ask while running terraform plan.
+
+--> if you provide default it will not ask for value
+
+--> We can use validation in variable value
+
+
+------------------------------------
+
+We will provide/override the value of variables in variables.tf file in 4 ways - 
+
+Priority wise 
+  1. environment var 
+  2. terraform.tfvars
+  3. *.auto.tfvars
+  4. -var & -var-file
+------------------------------------------------------------------------------------------
+To set environment variable, so that in console it will not ask instance type value.
+
+--> export TF_VAR_instance_type=t2.micro (Use bash terminal to run this command)
+
+----------------------------------------------------------------------------------------------
+Now terraform.tfvars (Another way to set variables)
+
+--> create a folder with name terraform.tfvars
+
+In this terraform.tfvars file, we can only provide the values of the variable which we defined in the variables.tf
+
+---------------------------------------------------------------------------------------------
+
+create a file name "prod.auto.tfvars" and put values
+
+------------------------------------
+we can give path location as well after -var = "location"
+terraform plan -var='ec2_config={v_size=51, v_type="gnp2"}'

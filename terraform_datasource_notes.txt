@@ -1,0 +1,11 @@
+Data Source in Terraform: 
+   
+   It allows ypu to fetch and use information from 
+   -> external sources or
+   -> existing resources within your cloud infrastructure.
+   
+   Useful for obtaining dynamic data that you need for your configurations.
+
+Project for this - tf-data-sources
+
+Task to create a EC2 using data sources - We will be using VPC & subnet and sg group created by project aws-vpc-ec2-nginx, or we can create manually and use.
