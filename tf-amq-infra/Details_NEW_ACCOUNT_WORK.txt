@@ -1,0 +1,44 @@
+Access KEy  - AKIASFIXCUPJHK4XYNNI
+Secret - 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
+
+KEYSTORE & TRUSTSTORE Commands
+
+keytool -genkey -keyalg RSA -alias artemis -keystore broker.ks -storepass broker -validity 365 -keysize 2048
+
+keytool -export -alias artemis -keystore broker.ks -file artemis.crt -storepass broker
+
+keytool -import -alias artemis -file artemis.crt -keystore client.ts -storepass broker
+
+Did below in master broker - 
+
+[amq-broker@ip-10-0-108-208 etc]$ keytool -genkey -keyalg RSA -alias artemis -keystore broker.ks -storepass broker -validity 365 -keysize 2048
+Enter the distinguished name. Provide a single dot (.) to leave a sub-component empty or press ENTER to use the default value in braces.
+What is your first and last name?
+  [Unknown]:  *.ap-south-1.compute.amazonaws.com                    
+What is the name of your organizational unit?
+  [Unknown]:  INTEGRATION
+What is the name of your organization?
+  [Unknown]:  NCS
+What is the name of your City or Locality?
+  [Unknown]:  PUNE
+What is the name of your State or Province?
+  [Unknown]:  MH
+What is the two-letter country code for this unit?
+  [Unknown]:  IN
+Is CN=*.ap-south-1.compute.amazonaws.com, OU=INTEGRATION, O=NCS, L=PUNE, ST=MH, C=IN correct?
+  [no]:  yes
+
+Generating 2,048 bit RSA key pair and self-signed certificate (SHA384withRSA) with a validity of 365 days
+        for: CN=*.ap-south-1.compute.amazonaws.com, OU=INTEGRATION, O=NCS, L=PUNE, ST=MH, C=IN
+
+To send files to S3
+
+[amq-broker@ip-10-0-108-208 etc]$ aws configure
+AWS Access Key ID [None]: AKIASFIXCUPJHK4XYNNI
+AWS Secret Access Key [None]: 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
+Default region name [None]:
+Default output format [None]:
+[amq-broker@ip-10-0-108-208 etc]$ aws s3 cp artemis.crt s3://tf-amq-project-dde1b2350269e308/tls/
+
+[amq-broker@ip-10-0-108-208 etc]$ aws s3 cp client.ts s3://tf-amq-project-dde1b2350269e308/tls/
+

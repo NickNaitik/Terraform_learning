@@ -13,10 +13,11 @@ variable "vpc_config" {
 
 variable "subnet_config" {
 
-    description = "Fet the CIDR and AZ for the subnets"
+    description = "Get the CIDR and AZ for the subnets"
     type = map(object({
       cidr_block = string
       az         = string 
+      public = optional(bool, false) //Default will be false
     }))
 
     validation {

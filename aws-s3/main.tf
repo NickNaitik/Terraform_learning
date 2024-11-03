@@ -24,7 +24,7 @@ resource "aws_s3_bucket" "demo-bucket" {
 //This will upload the data to bucket
 resource "aws_s3_object" "bucket-txt-data" {
     bucket = aws_s3_bucket.demo-bucket.bucket
-    source = "./file1.txt" //local path 
+    source = "./file1.txt" //local path
     key = "tf_file1.txt" // File name in aws s3 bucket
 }
 
