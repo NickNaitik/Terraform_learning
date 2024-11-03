@@ -27,7 +27,6 @@ SetUp AWS Account -  Created account using below information
     City - Ramgarh
     Postal Code - 829101
 
-    Payment using SBI DEBIT CARD - 4591 5601 3112 8688 
 
 Console url - https://eu-north-1.console.aws.amazon.com/console/home?nc2=h_ct&region=eu-north-1&src=header-signin#
 
